@@ -12,77 +12,96 @@ namespace TestBuilder._7_add_feature_selection
     [TestFixture]
     public class ExternalApiClient7Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
+        /// <summary>
+        /// Новый конфиг - новая зависимость.
+        /// Исправляем все тесты...
+        /// </summary>
         [Test]
         public void Test_GetCount_WhenNoDeletedRecords_ReturnAllRecords()
         {
+            // Arrange
             var handler = new Mock<HttpMessageHandler>();
-            handler.Protected()
-                   .Setup<Task<HttpResponseMessage>>("SendAsync",
-                       ItExpr.Is<HttpRequestMessage>(request =>
-                           request.RequestUri.ToString() == "http://baseurl.com/explore/tags/tag/?__a=1"),
-                       ItExpr.IsAny<CancellationToken>())
-                   .ReturnsAsync(new HttpResponseMessage {Content = new StringContent("{posts:[{}]}")});
+            handler
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(request =>
+                        request.RequestUri.ToString() ==
+                        "http://baseurl.com/explore/tags/tag/?__a=1"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    Content = new StringContent("{posts:[{}]}")
+                });
             var httpClient = new HttpClient(handler.Object);
 
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("http://baseurl.com");
 
-            var apiClient = new ExternalApiClient7(httpClient, config.Object, MapperContext.Map, new Mock<IFeatureConfig>().Object);
+            var apiClient = new ExternalApiClient7(httpClient, config.Object,
+                MapperContext.Map, new Mock<IFeatureConfig>().Object);
 
+            // Act
             var postCount = apiClient.GetPostsCount("tag");
 
+            // Assert
             Assert.AreEqual(1, postCount);
         }
 
         [Test]
         public void Test_GetCount_WhenHasDeletedRecords_CountOnlyActive()
         {
+            // Arrange
             var handler = new Mock<HttpMessageHandler>();
-            handler.Protected()
-                   .Setup<Task<HttpResponseMessage>>("SendAsync",
-                       ItExpr.Is<HttpRequestMessage>(request =>
-                           request.RequestUri.ToString() == "http://baseurl.com/explore/tags/tag/?__a=1"),
-                       ItExpr.IsAny<CancellationToken>())
-                   .ReturnsAsync(new HttpResponseMessage
-                       {Content = new StringContent("{posts:[{}, {IsDeleted: true}]}")});
+            handler
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(request =>
+                        request.RequestUri.ToString() == "http://baseurl.com/explore/tags/tag/?__a=1"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    Content = new StringContent("{posts:[{}, {IsDeleted: true}]}")
+                });
             var httpClient = new HttpClient(handler.Object);
 
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("http://baseurl.com");
 
-            var apiClient = new ExternalApiClient7(httpClient, config.Object, MapperContext.Map, new Mock<IFeatureConfig>().Object);
+            var apiClient = new ExternalApiClient7(httpClient, config.Object,
+                MapperContext.Map, new Mock<IFeatureConfig>().Object);
 
+            // Act
             var postCount = apiClient.GetPostsCount("tag");
 
+            // Assert
             Assert.AreEqual(1, postCount);
         }
-
 
         [Test]
         public void Test_GetPosts()
         {
+            // Arrange
             var handler = new Mock<HttpMessageHandler>();
-            handler.Protected()
-                   .Setup<Task<HttpResponseMessage>>("SendAsync",
-                       ItExpr.Is<HttpRequestMessage>(request =>
-                           request.RequestUri.ToString() == "http://baseurl.com/explore/tags/tag/?__a=1"),
-                       ItExpr.IsAny<CancellationToken>())
-                   .ReturnsAsync(new HttpResponseMessage
-                       { Content = new StringContent("{posts:[{Title: 'Title'}]}") });
+            handler
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(request =>
+                        request.RequestUri.ToString() == "http://baseurl.com/explore/tags/tag/?__a=1"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                    {Content = new StringContent("{posts:[{Title: 'Title'}]}")});
             var httpClient = new HttpClient(handler.Object);
 
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("http://baseurl.com");
 
-            var apiClient = new ExternalApiClient7(httpClient, config.Object, MapperContext.Map, new Mock<IFeatureConfig>().Object);
+            var apiClient = new ExternalApiClient7(httpClient, config.Object, MapperContext.Map,
+                new Mock<IFeatureConfig>().Object);
 
+            // Act
             var posts = apiClient.GetPosts("tag");
 
+            // Assert
             new[] {new PostView {Name = "Title"}}.Should().BeEquivalentTo(posts);
         }
     }

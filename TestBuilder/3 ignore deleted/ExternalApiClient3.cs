@@ -15,6 +15,10 @@ namespace TestBuilder._3_ignore_deleted
             _client = client;
         }
 
+        /// <summary>
+        /// После короткого ручного тестирования выясняется,
+        /// что сервис возвращает посты, которые были удалены и нам их не нужно считать.
+        /// </summary>
         public int GetPostsCount(string tag)
         {
             var request = new RestRequest($"{_apiConfig.BaseUrl}/explore/tags/{tag}/?__a=1");

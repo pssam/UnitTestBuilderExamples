@@ -14,6 +14,10 @@ namespace TestBuilder._2_bug_in_URL
             _client = client;
         }
 
+        /// <summary>
+        /// Не смотря на юнит тесты, мы нашли ошибку в коде.
+        /// Адрес, к которому мы обращались содержал лишний знак вопроса.
+        /// </summary>
         public int GetPostsCount(string tag)
         {
             var request = new RestRequest($"{_apiConfig.BaseUrl}/explore/tags/{tag}/?__a=1");

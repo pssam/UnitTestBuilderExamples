@@ -44,13 +44,9 @@ namespace TestBuilder.FinalComparison
                    .ReturnsAsync(new HttpResponseMessage
                        { Content = new StringContent("{posts:[{Title: 'Title'}]}") });
 
-
-
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("http://baseurl.com");
             _config = config.Object;
-
-
         }
 
         [Test]

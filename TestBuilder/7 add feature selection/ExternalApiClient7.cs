@@ -21,19 +21,35 @@ namespace TestBuilder._7_add_feature_selection
             _client = client;
         }
 
+        /// <summary>
+        /// Требования продолжают меняться...
+        /// Выяснилось, что некоторые заказчики хотят видеть удалённые посты.
+        /// Решено ввести ещё один конфиг,
+        /// который будет определять считать их или нет.
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public int GetPostsCount(string tag)
         {
             var response = _client.GetAsync($"{_apiConfig.BaseUrl}/explore/tags/{tag}/?__a=1").Result;
-            var postsResponse = JsonConvert.DeserializeObject<GetPostResponseFull>(response.Content.ReadAsStringAsync().Result);
-            return postsResponse.Posts.Count(post => _featureConfig.ShouldShowDeletedPosts || !post.IsDeleted);
+            var content = response.Content.ReadAsStringAsync().Result;
+            var postsResponse = JsonConvert.DeserializeObject<GetPostResponseFull>(content);
+            return postsResponse
+                   .Posts
+                   .Count(post => _featureConfig.ShouldShowDeletedPosts ||
+                                  !post.IsDeleted);
         }
 
         public PostView[] GetPosts(string tag)
         {
             var response = _client.GetAsync($"{_apiConfig.BaseUrl}/explore/tags/{tag}/?__a=1").Result;
-            var postsResponse = JsonConvert.DeserializeObject<GetPostResponseFull>(response.Content.ReadAsStringAsync().Result);
-            return postsResponse.Posts.Where(post => _featureConfig.ShouldShowDeletedPosts || !post.IsDeleted)
-                                .Select(x => _mapper.Map<PostView>(x)).ToArray();
+            var content = response.Content.ReadAsStringAsync().Result;
+            var postsResponse = JsonConvert.DeserializeObject<GetPostResponseFull>(content);
+            return postsResponse
+                   .Posts
+                   .Where(post => _featureConfig.ShouldShowDeletedPosts || !post.IsDeleted)
+                   .Select(x => _mapper.Map<PostView>(x))
+                   .ToArray();
         }
     }
 }

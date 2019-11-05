@@ -5,15 +5,15 @@ namespace TestBuilder.Builder._1
     [TestFixture]
     public class ExternalApiClient1WithBuilderTests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
 
+        /// <summary>
+        /// “ест простой и пон€тный.
+        /// ≈сли с сервера возвращаетс€ один пост, то мы должны его посчитать.
+        /// </summary>
         [Test]
         public void Test_GetCount()
         {
-            var apiClient = new ExternalApiBuilder1().WithEmptyPost().Build();
+            var apiClient = new ExternalApiClientBuilder1().WithPost().Build();
 
             var postCount = apiClient.GetPostsCount("tag");
 

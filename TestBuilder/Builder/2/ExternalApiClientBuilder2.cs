@@ -7,7 +7,11 @@ using Tests;
 
 namespace TestBuilder.Builder._2
 {
-    internal class ExternalApiBuilder2
+    /// <summary>
+    /// Мы хотим проверять, что урл правильно формируется.
+    /// Добавим тэг как зависимость и используем его.
+    /// </summary>
+    internal class ExternalApiClientBuilder2
     {
         public string BaseUrl { get; set; } = "DefaultBaseUrl";
 
@@ -18,11 +22,15 @@ namespace TestBuilder.Builder._2
         public ExternalApiClient2 Build()
         {
             var restClient = new Mock<IRestClient>();
-            restClient.Setup(x => x.Execute<GetPostResponse>(
-                          It.Is<IRestRequest>(request => request.Resource == $"{BaseUrl}/explore/tags/{Tag}/"), Method.GET))
-                      .Returns(
-                          new RestResponse<GetPostResponse>
-                              {Data = new GetPostResponse {Posts = Posts.ToArray()}});
+            restClient
+                .Setup(x =>
+                    x.Execute<GetPostResponse>(
+                        It.Is<IRestRequest>(request =>
+                            request.Resource == $"{BaseUrl}/explore/tags/{Tag}/"), 
+                        Method.GET))
+                .Returns(
+                    new RestResponse<GetPostResponse>
+                        {Data = new GetPostResponse {Posts = Posts.ToArray()}});
 
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns(BaseUrl);
@@ -30,7 +38,7 @@ namespace TestBuilder.Builder._2
             return new ExternalApiClient2(restClient.Object, config.Object);
         }
 
-        public ExternalApiBuilder2 WithEmptyPost()
+        public ExternalApiClientBuilder2 WithPost()
         {
             Posts.Add(new Post());
             return this;

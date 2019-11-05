@@ -3,17 +3,22 @@ using Tests;
 
 namespace TestBuilder._4_changed_API
 {
-    public class ExternalApiClient3
+    public class ExternalApiClient4
     {
         private readonly IRestClient _client;
         private readonly IApiConfig _apiConfig;
 
-        public ExternalApiClient3(IRestClient client, IApiConfig apiConfig)
+        public ExternalApiClient4(IRestClient client, IApiConfig apiConfig)
         {
             _apiConfig = apiConfig;
             _client = client;
         }
 
+        /// <summary>
+        /// ¬ы€снилось, что мы использовали неправильный класс дл€ ответа с сервера.
+        /// ¬место GetPostResponse возвращаетс€ GetPostResponseFull.
+        ///  азалось бы, маленькие изменени€.
+        /// </summary>
         public int GetPostsCount(string tag)
         {
             var request = new RestRequest($"{_apiConfig.BaseUrl}/explore/tags/{tag}/?__a=1");

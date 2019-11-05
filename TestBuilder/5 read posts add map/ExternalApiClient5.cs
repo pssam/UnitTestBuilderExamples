@@ -25,11 +25,19 @@ namespace TestBuilder._5_read_posts_add_map
             return posts.Data.Posts.Count(post => !post.IsDeleted);
         }
 
+        /// <summary>
+        /// Ну, хорошо. Количество мы научились считать.
+        /// Хотелось бы получить и сами посты.
+        /// Но остальная часть приложения не знает ничего о респонсах,
+        /// нам нужно преобразовать ответ с сервера в бизнес объекты.
+        /// Для этого внедряем новую зависимость IMapper mapper.
+        /// </summary>
         public PostView[] GetPosts(string tag)
         {
             var request = new RestRequest($"{_apiConfig.BaseUrl}/explore/tags/{tag}/?__a=1");
             var posts = _client.Execute<GetPostResponseFull>(request, Method.GET);
-            return posts.Data.Posts.Where(post => !post.IsDeleted).Select(x => _mapper.Map<PostView>(x)).ToArray();
+            return posts.Data.Posts.Where(post => !post.IsDeleted)
+                        .Select(x => _mapper.Map<PostView>(x)).ToArray();
         }
     }
 }

@@ -1,21 +1,18 @@
 using NUnit.Framework;
-using TestBuilder.Builder._3;
 
 namespace TestBuilder.Builder._4
 {
+    /// <summary>
+    /// —ами тесты не мен€ютс€.
+    /// </summary>
     [TestFixture]
     public class ExternalApiClient4WithBuilderTests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void Test_GetCount()
         {
-            var builder = new ExternalApiBuilder4();
-            var apiClient = builder.WithEmptyPost().Build();
+            var builder = new ExternalApiClientBuilder4();
+            var apiClient = builder.WithPost().Build();
 
             var postCount = apiClient.GetPostsCount(builder.Tag);
 
@@ -25,8 +22,8 @@ namespace TestBuilder.Builder._4
         [Test]
         public void Test_GetCount_IgnoresDeleted()
         {
-            var builder = new ExternalApiBuilder4();
-            var apiClient = builder.WithEmptyPost().WithDeletedPost().Build();
+            var builder = new ExternalApiClientBuilder4();
+            var apiClient = builder.WithPost().WithDeletedPost().Build();
 
             var postCount = apiClient.GetPostsCount(builder.Tag);
 

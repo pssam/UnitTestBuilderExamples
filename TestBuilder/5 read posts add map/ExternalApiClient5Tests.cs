@@ -6,30 +6,31 @@ using Tests;
 
 namespace TestBuilder._5_read_posts_add_map
 {
+    /// <summary>
+    /// ќп€ть приходитс€ исправл€ть все тесты.
+    /// ѕлюс по€вл€етс€ новый тест дл€ проверки нового метода.
+    /// </summary>
     [TestFixture]
     public class ExternalApiClient5Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void Test_GetCount_WhenNoDeletedRecords_ReturnAllRecords()
         {
             var restClient = new Mock<IRestClient>();
             restClient
                 .Setup(x => x.Execute<GetPostResponseFull>(
-                    It.Is<IRestRequest>(request => request.Resource == "baseUrl/explore/tags/tag/"),
+                    It.Is<IRestRequest>(request =>
+                        request.Resource == "baseUrl/explore/tags/tag/"),
                     Method.GET))
                 .Returns(
                     new RestResponse<GetPostResponseFull>
-                        {Data = new GetPostResponseFull {Posts = new PostFull[] {new PostFull(),}}});
+                        {Data = new GetPostResponseFull {Posts = new[] {new PostFull(),}}});
 
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("baseUrl");
 
-            var apiClient = new ExternalApiClient5(restClient.Object, config.Object, MapperContext.Map);
+            var apiClient = new ExternalApiClient5(restClient.Object, config.Object,
+                MapperContext.Map);
 
             var postCount = apiClient.GetPostsCount("tag");
 
@@ -42,13 +43,14 @@ namespace TestBuilder._5_read_posts_add_map
             var restClient = new Mock<IRestClient>();
             restClient
                 .Setup(x => x.Execute<GetPostResponseFull>(
-                    It.Is<IRestRequest>(request => request.Resource == "baseUrl/explore/tags/tag/"),
+                    It.Is<IRestRequest>(request =>
+                        request.Resource == "baseUrl/explore/tags/tag/"),
                     Method.GET))
                 .Returns(
                     new RestResponse<GetPostResponseFull>
                     {
                         Data = new GetPostResponseFull
-                            {Posts = new PostFull[] {new PostFull(), new PostFull {IsDeleted = true},}}
+                            {Posts = new[] {new PostFull(), new PostFull {IsDeleted = true},}}
                     });
 
             var config = new Mock<IApiConfig>();
@@ -61,14 +63,18 @@ namespace TestBuilder._5_read_posts_add_map
             Assert.AreEqual(1, postCount);
         }
 
-
+        /// <summary>
+        /// ¬ тесте уже можно запутатьс€.
+        /// „то именно провер€етс€, какие параметры важны становитс€ не пон€тно.
+        /// </summary>
         [Test]
         public void Test_GetPosts()
         {
             var restClient = new Mock<IRestClient>();
             restClient
                 .Setup(x => x.Execute<GetPostResponseFull>(
-                    It.Is<IRestRequest>(request => request.Resource == "baseUrl/explore/tags/tag/"),
+                    It.Is<IRestRequest>(request =>
+                        request.Resource == "baseUrl/explore/tags/tag/"),
                     Method.GET))
                 .Returns(
                     new RestResponse<GetPostResponseFull>
@@ -80,7 +86,8 @@ namespace TestBuilder._5_read_posts_add_map
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("baseUrl");
 
-            var apiClient = new ExternalApiClient5(restClient.Object, config.Object, MapperContext.Map);
+            var apiClient = new ExternalApiClient5(restClient.Object, config.Object,
+                MapperContext.Map);
 
             var posts = apiClient.GetPosts("tag");
 

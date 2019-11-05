@@ -13,14 +13,10 @@ namespace TestBuilder.FinalComparison
     [TestFixture]
     public class SimpleTests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void Test_GetCount_WhenNoDeletedRecords_ReturnAllRecords()
         {
+            // Arrange
             var handler = new Mock<HttpMessageHandler>();
             handler.Protected()
                    .Setup<Task<HttpResponseMessage>>("SendAsync",
@@ -35,14 +31,17 @@ namespace TestBuilder.FinalComparison
 
             var apiClient = new ExternalApiClient7(httpClient, config.Object, MapperContext.Map, new Mock<IFeatureConfig>().Object);
 
+            // Act
             var postCount = apiClient.GetPostsCount("tag");
 
+            // Assert
             Assert.AreEqual(1, postCount);
         }
 
         [Test]
         public void Test_GetCount_WhenHasDeletedRecords_CountOnlyActive()
         {
+            // Arrange
             var handler = new Mock<HttpMessageHandler>();
             handler.Protected()
                    .Setup<Task<HttpResponseMessage>>("SendAsync",
@@ -58,15 +57,17 @@ namespace TestBuilder.FinalComparison
 
             var apiClient = new ExternalApiClient7(httpClient, config.Object, MapperContext.Map, new Mock<IFeatureConfig>().Object);
 
+            // Act
             var postCount = apiClient.GetPostsCount("tag");
 
+            // Assert
             Assert.AreEqual(1, postCount);
         }
-
 
         [Test]
         public void Test_GetPosts()
         {
+            // Arrange
             var handler = new Mock<HttpMessageHandler>();
             handler.Protected()
                    .Setup<Task<HttpResponseMessage>>("SendAsync",
@@ -82,8 +83,10 @@ namespace TestBuilder.FinalComparison
 
             var apiClient = new ExternalApiClient7(httpClient, config.Object, MapperContext.Map, new Mock<IFeatureConfig>().Object);
 
+            // Act
             var posts = apiClient.GetPosts("tag");
 
+            // Assert
             new[] {new PostView {Name = "Title"}}.Should().BeEquivalentTo(posts);
         }
     }

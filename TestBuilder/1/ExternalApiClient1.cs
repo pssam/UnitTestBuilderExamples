@@ -14,6 +14,11 @@ namespace TestBuilder._1
             _client = client;
         }
 
+        /// <summary>
+        /// Метод делает запрос к стороннему сервису, чтобы получить посты соответсвующие тэгу.
+        /// Затем возвращает их количество.
+        /// Адрес сервиса берётся из конфигурационного файла.
+        /// </summary>
         public int GetPostsCount(string tag)
         {
             var request = new RestRequest($"{_apiConfig.BaseUrl}/explore/tags/?{tag}/?__a=1");

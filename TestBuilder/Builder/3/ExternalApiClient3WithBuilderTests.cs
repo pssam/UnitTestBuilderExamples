@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using TestBuilder.Builder._2;
 
 namespace TestBuilder.Builder._3
 {
@@ -14,8 +13,23 @@ namespace TestBuilder.Builder._3
         [Test]
         public void Test_GetCount()
         {
-            var builder = new ExternalApiBuilder3();
-            var apiClient = builder.WithEmptyPost().Build();
+            var builder = new ExternalApiClientBuilder3();
+            var apiClient = builder.WithPost().Build();
+
+            var postCount = apiClient.GetPostsCount(builder.Tag);
+
+            Assert.AreEqual(1, postCount);
+        }
+
+        /// <summary>
+        /// Есть удалённый и неудалённые пост.
+        /// Считаем только 1.
+        /// </summary>
+        [Test]
+        public void Test_GetCount_IgnoresDeleted()
+        {
+            var builder = new ExternalApiClientBuilder3();
+            var apiClient = builder.WithPost().WithDeletedPost().Build();
 
             var postCount = apiClient.GetPostsCount(builder.Tag);
 

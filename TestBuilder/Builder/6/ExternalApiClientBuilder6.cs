@@ -12,7 +12,11 @@ using Tests;
 
 namespace TestBuilder.Builder._6
 {
-    internal class ExternalApiBuilder6
+    /// <summary>
+    /// Поменялся клиент.
+    /// Исправляем только билдер
+    /// </summary>
+    internal class ExternalApiClientBuilder6
     {
         public string BaseUrl { get; set; } = "http://baseurl.com";
 
@@ -23,16 +27,17 @@ namespace TestBuilder.Builder._6
         public ExternalApiClient6 Build()
         {
             var handler = new Mock<HttpMessageHandler>();
-            handler.Protected()
-                   .Setup<Task<HttpResponseMessage>>("SendAsync",
-                       ItExpr.Is<HttpRequestMessage>(request =>
-                           request.RequestUri.ToString() == $"{BaseUrl}/explore/tags/{Tag}/?__a=1"),
-                       ItExpr.IsAny<CancellationToken>())
-                   .ReturnsAsync(new HttpResponseMessage
-                   {
-                       Content = new StringContent(JsonConvert.SerializeObject(new GetPostResponseFull
-                           {Posts = Posts.ToArray()}))
-                   });
+            handler
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(request =>
+                        request.RequestUri.ToString() == $"{BaseUrl}/explore/tags/{Tag}/?__a=1"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(new GetPostResponseFull
+                        {Posts = Posts.ToArray()}))
+                });
             var httpClient = new HttpClient(handler.Object);
 
             var config = new Mock<IApiConfig>();
@@ -41,21 +46,15 @@ namespace TestBuilder.Builder._6
             return new ExternalApiClient6(httpClient, config.Object, MapperContext.Map);
         }
 
-        public ExternalApiBuilder6 WithEmptyPost()
-        {
-            Posts.Add(new PostFull());
-            return this;
-        }
-
-        public ExternalApiBuilder6 WithDeletedPost()
-        {
-            Posts.Add(new PostFull {IsDeleted = true});
-            return this;
-        }
-
-        public ExternalApiBuilder6 WithPost(string title)
+        public ExternalApiClientBuilder6 WithPost(string title = null)
         {
             Posts.Add(new PostFull { Title = title });
+            return this;
+        }
+
+        public ExternalApiClientBuilder6 WithDeletedPost()
+        {
+            Posts.Add(new PostFull {IsDeleted = true});
             return this;
         }
     }

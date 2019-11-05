@@ -4,9 +4,9 @@ using RestSharp;
 using TestBuilder._3_ignore_deleted;
 using Tests;
 
-namespace TestBuilder.Builder._4
+namespace TestBuilder.Builder._3
 {
-    internal class ExternalApiBuilder4
+    internal class ExternalApiClientBuilder3
     {
         public string BaseUrl { get; set; } = "DefaultBaseUrl";
 
@@ -29,13 +29,17 @@ namespace TestBuilder.Builder._4
             return new ExternalApiClient3(restClient.Object, config.Object);
         }
 
-        public ExternalApiBuilder4 WithEmptyPost()
+        public ExternalApiClientBuilder3 WithPost()
         {
             Posts.Add(new PostFull());
             return this;
         }
 
-        public ExternalApiBuilder4 WithDeletedPost()
+        /// <summary>
+        /// Метод формирует удалённые посты.
+        /// </summary>
+        /// <returns></returns>
+        public ExternalApiClientBuilder3 WithDeletedPost()
         {
             Posts.Add(new PostFull {IsDeleted = true});
             return this;

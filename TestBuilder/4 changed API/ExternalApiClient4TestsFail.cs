@@ -6,7 +6,7 @@ using Tests;
 namespace TestBuilder._4_changed_API
 {
     [TestFixture]
-    public class ExternalApiClient3TestsFail
+    public class ExternalApiClient4TestsFail
     {
         [SetUp]
         public void Setup()
@@ -28,7 +28,7 @@ namespace TestBuilder._4_changed_API
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("baseUrl");
 
-            var apiClient = new ExternalApiClient3(restClient.Object, config.Object);
+            var apiClient = new ExternalApiClient4(restClient.Object, config.Object);
 
             var postCount = apiClient.GetPostsCount("tag");
 

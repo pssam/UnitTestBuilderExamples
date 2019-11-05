@@ -8,13 +8,18 @@ namespace TestBuilder._2_bug_in_URL
     [TestFixture]
     public class ExternalApiClient2Tests
     {
+        /// <summary>
+        /// Юнит тест становится ещё сложнее из-за того,
+        /// что нам надо проверять урл, к которому происходит запрос.
+        /// </summary>
         [Test]
         public void Test_GetCount()
         {
             var restClient = new Mock<IRestClient>();
             restClient
                 .Setup(x => x.Execute<GetPostResponse>(
-                    It.Is<IRestRequest>(request => request.Resource == "baseUrl/explore/tags/tag/"),
+                    It.Is<IRestRequest>(request =>
+                        request.Resource == "baseUrl/explore/tags/tag/"),
                     Method.GET))
                 .Returns(
                     new RestResponse<GetPostResponse>
