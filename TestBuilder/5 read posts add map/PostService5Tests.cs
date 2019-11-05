@@ -11,7 +11,7 @@ namespace TestBuilder._5_read_posts_add_map
     /// ѕлюс по€вл€етс€ новый тест дл€ проверки нового метода.
     /// </summary>
     [TestFixture]
-    public class ExternalApiClient5Tests
+    public class PostService5Tests
     {
         [Test]
         public void Test_GetCount_WhenNoDeletedRecords_ReturnAllRecords()
@@ -29,10 +29,10 @@ namespace TestBuilder._5_read_posts_add_map
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("baseUrl");
 
-            var apiClient = new ExternalApiClient5(restClient.Object, config.Object,
+            var service = new PostService5(restClient.Object, config.Object,
                 MapperContext.Map);
 
-            var postCount = apiClient.GetPostsCount("tag");
+            var postCount = service.GetPostsCount("tag");
 
             Assert.AreEqual(1, postCount);
         }
@@ -56,9 +56,9 @@ namespace TestBuilder._5_read_posts_add_map
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("baseUrl");
 
-            var apiClient = new ExternalApiClient5(restClient.Object, config.Object, MapperContext.Map);
+            var service = new PostService5(restClient.Object, config.Object, MapperContext.Map);
 
-            var postCount = apiClient.GetPostsCount("tag");
+            var postCount = service.GetPostsCount("tag");
 
             Assert.AreEqual(1, postCount);
         }
@@ -86,10 +86,10 @@ namespace TestBuilder._5_read_posts_add_map
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("baseUrl");
 
-            var apiClient = new ExternalApiClient5(restClient.Object, config.Object,
+            var service = new PostService5(restClient.Object, config.Object,
                 MapperContext.Map);
 
-            var posts = apiClient.GetPosts("tag");
+            var posts = service.GetPosts("tag");
 
             new[] {new PostView {Name = "Title"}}.Should().BeEquivalentTo(posts);
         }

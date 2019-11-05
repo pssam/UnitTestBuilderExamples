@@ -1,12 +1,14 @@
 using FluentAssertions;
 using NUnit.Framework;
-using TestBuilder.Builder._7;
 using Tests;
 
-namespace TestBuilder.FinalComparison
+namespace TestBuilder.Builder._7
 {
+    /// <summary>
+    /// Тесты не меняются.
+    /// </summary>
     [TestFixture]
-    public class BuilderTests
+    public class PostService7Tests
     {
         [Test]
         public void Test_GetCount()

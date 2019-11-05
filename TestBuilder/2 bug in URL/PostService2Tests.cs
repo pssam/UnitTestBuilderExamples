@@ -6,7 +6,7 @@ using Tests;
 namespace TestBuilder._2_bug_in_URL
 {
     [TestFixture]
-    public class ExternalApiClient2Tests
+    public class PostService2Tests
     {
         /// <summary>
         /// Юнит тест становится ещё сложнее из-за того,
@@ -28,9 +28,9 @@ namespace TestBuilder._2_bug_in_URL
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("baseUrl");
 
-            var apiClient = new ExternalApiClient2(restClient.Object, config.Object);
+            var service = new PostService2(restClient.Object, config.Object);
 
-            var postCount = apiClient.GetPostsCount("tag");
+            var postCount = service.GetPostsCount("tag");
 
             Assert.AreEqual(1, postCount);
         }

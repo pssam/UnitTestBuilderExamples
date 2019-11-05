@@ -6,7 +6,7 @@ using Tests;
 namespace TestBuilder._1
 {
     [TestFixture]
-    public class ExternalApiClient1Tests
+    public class PostService1Tests
     {
         /// <summary>
         /// Не смотря на то, что код, который проверяется достаточно простой и короткий,
@@ -26,9 +26,9 @@ namespace TestBuilder._1
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("baseUrl");
 
-            var apiClient = new ExternalApiClient1(restClient.Object, config.Object);
+            var service = new PostService(restClient.Object, config.Object);
 
-            var postCount = apiClient.GetPostsCount("tag");
+            var postCount = service.GetPostsCount("tag");
 
             Assert.AreEqual(1, postCount);
         }

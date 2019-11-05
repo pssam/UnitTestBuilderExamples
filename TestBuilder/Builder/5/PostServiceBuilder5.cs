@@ -11,7 +11,7 @@ namespace TestBuilder.Builder._5
     /// ѕросто создадим новый мок и передадим его клиенту.
     /// MapperContext.Map
     /// </summary>
-    internal class ExternalApiClientBuilder5
+    internal class PostServiceBuilder5
     {
         public string BaseUrl { get; set; } = "DefaultBaseUrl";
 
@@ -19,7 +19,7 @@ namespace TestBuilder.Builder._5
 
         public string Tag { get; set; } = "DefaultTag";
 
-        public ExternalApiClient5 Build()
+        public PostService5 Build()
         {
             var restClient = new Mock<IRestClient>();
             restClient
@@ -33,17 +33,17 @@ namespace TestBuilder.Builder._5
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns(BaseUrl);
 
-            return new ExternalApiClient5(restClient.Object, config.Object,
+            return new PostService5(restClient.Object, config.Object,
                 MapperContext.Map);
         }
 
-        public ExternalApiClientBuilder5 WithPost(string title = null)
+        public PostServiceBuilder5 WithPost(string title = null)
         {
             Posts.Add(new PostFull { Title = title });
             return this;
         }
 
-        public ExternalApiClientBuilder5 WithDeletedPost()
+        public PostServiceBuilder5 WithDeletedPost()
         {
             Posts.Add(new PostFull {IsDeleted = true});
             return this;

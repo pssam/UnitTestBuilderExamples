@@ -6,13 +6,13 @@ using Tests;
 
 namespace TestBuilder._6_switch_to_HttpClient
 {
-    public class ExternalApiClient6
+    public class PostService6
     {
         private readonly HttpClient _client;
         private readonly IApiConfig _apiConfig;
         private readonly IMapper _mapper;
 
-        public ExternalApiClient6(HttpClient client, IApiConfig apiConfig, IMapper mapper)
+        public PostService6(HttpClient client, IApiConfig apiConfig, IMapper mapper)
         {
             _apiConfig = apiConfig;
             _mapper = mapper;

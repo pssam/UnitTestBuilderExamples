@@ -1,10 +1,9 @@
 using NUnit.Framework;
-using TestBuilder.Builder._1;
 
 namespace TestBuilder.Builder._2
 {
     [TestFixture]
-    public class ExternalApiClient2WithBuilderTests
+    public class PostService2Tests
     {
         /// <summary>
         /// Тест практически не изменился.
@@ -13,10 +12,10 @@ namespace TestBuilder.Builder._2
         [Test]
         public void Test_GetCount()
         {
-            var builder = new ExternalApiClientBuilder2();
-            var apiClient = builder.WithPost().Build();
+            var builder = new PostServiceBuilder2();
+            var service = builder.WithPost().Build();
 
-            var postCount = apiClient.GetPostsCount(builder.Tag);
+            var postCount = service.GetPostsCount(builder.Tag);
 
             Assert.AreEqual(1, postCount);
         }
@@ -27,11 +26,11 @@ namespace TestBuilder.Builder._2
         [Test]
         public void Test_GetCount2()
         {
-            var builder = new ExternalApiClientBuilder2();
+            var builder = new PostServiceBuilder2();
             builder.Tag = "new";
-            var apiClient = builder.WithPost().Build();
+            var service = builder.WithPost().Build();
 
-            var postCount = apiClient.GetPostsCount(builder.Tag);
+            var postCount = service.GetPostsCount(builder.Tag);
 
             Assert.AreEqual(1, postCount);
         }

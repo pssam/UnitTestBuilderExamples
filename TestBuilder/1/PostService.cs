@@ -3,12 +3,12 @@ using Tests;
 
 namespace TestBuilder._1
 {
-    public class ExternalApiClient1
+    public class PostService
     {
         private readonly IRestClient _client;
         private readonly IApiConfig _apiConfig;
 
-        public ExternalApiClient1(IRestClient client, IApiConfig apiConfig)
+        public PostService(IRestClient client, IApiConfig apiConfig)
         {
             _apiConfig = apiConfig;
             _client = client;

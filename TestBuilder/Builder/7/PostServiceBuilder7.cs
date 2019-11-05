@@ -13,7 +13,7 @@ namespace TestBuilder.Builder._7
     /// <summary>
     /// Добавили новую зависимость
     /// </summary>
-    internal class ExternalApiClientBuilder7
+    internal class PostServiceBuilder7
     {
         public string BaseUrl { get; set; } = "http://baseurl.com";
 
@@ -21,7 +21,7 @@ namespace TestBuilder.Builder._7
 
         public string Tag { get; set; } = "DefaultTag";
 
-        public ExternalApiClient7 Build()
+        public PostService7 Build()
         {
             var handler = new Mock<HttpMessageHandler>();
             handler
@@ -40,17 +40,17 @@ namespace TestBuilder.Builder._7
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns(BaseUrl);
 
-            return new ExternalApiClient7(httpClient, config.Object,
+            return new PostService7(httpClient, config.Object,
                 MapperContext.Map, new Mock<IFeatureConfig>().Object);
         }
 
-        public ExternalApiClientBuilder7 WithPost(string title = null)
+        public PostServiceBuilder7 WithPost(string title = null)
         {
             Posts.Add(new PostFull { Title = title });
             return this;
         }
 
-        public ExternalApiClientBuilder7 WithDeletedPost()
+        public PostServiceBuilder7 WithDeletedPost()
         {
             Posts.Add(new PostFull {IsDeleted = true});
             return this;

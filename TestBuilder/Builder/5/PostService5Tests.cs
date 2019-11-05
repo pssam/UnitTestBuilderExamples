@@ -9,15 +9,15 @@ namespace TestBuilder.Builder._5
     /// Допишем новый тест.
     /// </summary>
     [TestFixture]
-    public class ExternalApiClient5WithBuilderTests
+    public class PostService5Tests
     {
         [Test]
         public void Test_GetCount()
         {
-            var builder = new ExternalApiClientBuilder5();
-            var apiClient = builder.WithPost().Build();
+            var builder = new PostServiceBuilder5();
+            var service = builder.WithPost().Build();
 
-            var postCount = apiClient.GetPostsCount(builder.Tag);
+            var postCount = service.GetPostsCount(builder.Tag);
 
             Assert.AreEqual(1, postCount);
         }
@@ -25,10 +25,10 @@ namespace TestBuilder.Builder._5
         [Test]
         public void Test_GetCount_IgnoresDeleted()
         {
-            var builder = new ExternalApiClientBuilder5();
-            var apiClient = builder.WithPost().WithDeletedPost().Build();
+            var builder = new PostServiceBuilder5();
+            var service = builder.WithPost().WithDeletedPost().Build();
 
-            var postCount = apiClient.GetPostsCount(builder.Tag);
+            var postCount = service.GetPostsCount(builder.Tag);
 
             Assert.AreEqual(1, postCount);
         }
@@ -36,10 +36,10 @@ namespace TestBuilder.Builder._5
         [Test]
         public void Test_GetPosts()
         {
-            var builder = new ExternalApiClientBuilder5();
-            var apiClient = builder.WithPost("Title").Build();
+            var builder = new PostServiceBuilder5();
+            var service = builder.WithPost("Title").Build();
 
-            var posts = apiClient.GetPosts(builder.Tag);
+            var posts = service.GetPosts(builder.Tag);
 
             new[] { new PostView { Name = "Title" } }.Should().BeEquivalentTo(posts);
         }

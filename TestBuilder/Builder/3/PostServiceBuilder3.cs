@@ -6,32 +6,32 @@ using Tests;
 
 namespace TestBuilder.Builder._3
 {
-    internal class ExternalApiClientBuilder3
+    internal class PostServiceBuilder3
     {
         public string BaseUrl { get; set; } = "DefaultBaseUrl";
 
-        public List<PostFull> Posts { get; set; } = new List<PostFull>();
+        public List<Post> Posts { get; set; } = new List<Post>();
 
         public string Tag { get; set; } = "DefaultTag";
 
-        public ExternalApiClient3 Build()
+        public PostService3 Build()
         {
             var restClient = new Mock<IRestClient>();
-            restClient.Setup(x => x.Execute<GetPostResponseFull>(
+            restClient.Setup(x => x.Execute<GetPostResponse>(
                           It.Is<IRestRequest>(request => request.Resource == $"{BaseUrl}/explore/tags/{Tag}/"), Method.GET))
                       .Returns(
-                          new RestResponse<GetPostResponseFull>
-                              {Data = new GetPostResponseFull() {Posts = Posts.ToArray()}});
+                          new RestResponse<GetPostResponse>
+                              {Data = new GetPostResponse {Posts = Posts.ToArray()}});
 
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns(BaseUrl);
 
-            return new ExternalApiClient3(restClient.Object, config.Object);
+            return new PostService3(restClient.Object, config.Object);
         }
 
-        public ExternalApiClientBuilder3 WithPost()
+        public PostServiceBuilder3 WithPost()
         {
-            Posts.Add(new PostFull());
+            Posts.Add(new Post());
             return this;
         }
 
@@ -39,9 +39,9 @@ namespace TestBuilder.Builder._3
         /// Метод формирует удалённые посты.
         /// </summary>
         /// <returns></returns>
-        public ExternalApiClientBuilder3 WithDeletedPost()
+        public PostServiceBuilder3 WithDeletedPost()
         {
-            Posts.Add(new PostFull {IsDeleted = true});
+            Posts.Add(new Post {IsDeleted = true});
             return this;
         }
     }

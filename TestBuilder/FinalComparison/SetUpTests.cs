@@ -52,9 +52,9 @@ namespace TestBuilder.FinalComparison
         [Test]
         public void Test_GetCount_WhenNoDeletedRecords_ReturnAllRecords()
         {
-            var apiClient = new ExternalApiClient7(_httpClient, _config, MapperContext.Map, new Mock<IFeatureConfig>().Object);
+            var service = new PostService7(_httpClient, _config, MapperContext.Map, new Mock<IFeatureConfig>().Object);
 
-            var postCount = apiClient.GetPostsCount("Test_GetCount_WhenNoDeletedRecords_ReturnAllRecords");
+            var postCount = service.GetPostsCount("Test_GetCount_WhenNoDeletedRecords_ReturnAllRecords");
 
             Assert.AreEqual(1, postCount);
         }
@@ -62,9 +62,9 @@ namespace TestBuilder.FinalComparison
         [Test]
         public void Test_GetCount_WhenHasDeletedRecords_CountOnlyActive()
         {
-            var apiClient = new ExternalApiClient7(_httpClient, _config, MapperContext.Map, new Mock<IFeatureConfig>().Object);
+            var service = new PostService7(_httpClient, _config, MapperContext.Map, new Mock<IFeatureConfig>().Object);
 
-            var postCount = apiClient.GetPostsCount("Test_GetCount_WhenHasDeletedRecords_CountOnlyActive");
+            var postCount = service.GetPostsCount("Test_GetCount_WhenHasDeletedRecords_CountOnlyActive");
 
             Assert.AreEqual(1, postCount);
         }
@@ -72,9 +72,9 @@ namespace TestBuilder.FinalComparison
         [Test]
         public void Test_GetPosts()
         {
-            var apiClient = new ExternalApiClient7(_httpClient, _config, MapperContext.Map, new Mock<IFeatureConfig>().Object);
+            var service = new PostService7(_httpClient, _config, MapperContext.Map, new Mock<IFeatureConfig>().Object);
 
-            var posts = apiClient.GetPosts("Test_GetPosts");
+            var posts = service.GetPosts("Test_GetPosts");
 
             new[] {new PostView {Name = "Title"}}.Should().BeEquivalentTo(posts);
         }

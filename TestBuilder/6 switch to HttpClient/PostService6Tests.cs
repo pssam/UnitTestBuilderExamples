@@ -10,7 +10,7 @@ using Tests;
 namespace TestBuilder._6_switch_to_HttpClient
 {
     [TestFixture]
-    public class ExternalApiClient6Tests
+    public class PostService6Tests
     {
         /// <summary>
         /// Вот только подставить зависимость оказалось сложнее.
@@ -39,10 +39,10 @@ namespace TestBuilder._6_switch_to_HttpClient
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("http://baseurl.com");
 
-            var apiClient = new ExternalApiClient6(httpClient, config.Object, MapperContext.Map);
+            var service = new PostService6(httpClient, config.Object, MapperContext.Map);
 
             // Act
-            var postCount = apiClient.GetPostsCount("tag");
+            var postCount = service.GetPostsCount("tag");
 
             //Assert
             Assert.AreEqual(1, postCount);
@@ -67,11 +67,11 @@ namespace TestBuilder._6_switch_to_HttpClient
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("http://baseurl.com");
 
-            var apiClient = new ExternalApiClient6(httpClient, config.Object,
+            var service = new PostService6(httpClient, config.Object,
                 MapperContext.Map);
 
             // Act
-            var postCount = apiClient.GetPostsCount("tag");
+            var postCount = service.GetPostsCount("tag");
 
             // Assert
             Assert.AreEqual(1, postCount);
@@ -97,10 +97,10 @@ namespace TestBuilder._6_switch_to_HttpClient
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("http://baseurl.com");
 
-            var apiClient = new ExternalApiClient6(httpClient, config.Object, MapperContext.Map);
+            var service = new PostService6(httpClient, config.Object, MapperContext.Map);
 
             // Act
-            var posts = apiClient.GetPosts("tag");
+            var posts = service.GetPosts("tag");
 
             // Assert
             new[] {new PostView {Name = "Title"}}.Should().BeEquivalentTo(posts);

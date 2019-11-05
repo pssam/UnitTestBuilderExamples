@@ -10,7 +10,7 @@ namespace TestBuilder.Builder._4
     /// Поменялось API.
     /// Меняется только билдер.
     /// </summary>
-    internal class ExternalApiClientBuilder4
+    internal class PostServiceBuilder4
     {
         public string BaseUrl { get; set; } = "DefaultBaseUrl";
 
@@ -18,7 +18,7 @@ namespace TestBuilder.Builder._4
 
         public string Tag { get; set; } = "DefaultTag";
 
-        public ExternalApiClient4 Build()
+        public PostService4 Build()
         {
             var restClient = new Mock<IRestClient>();
             restClient
@@ -34,16 +34,16 @@ namespace TestBuilder.Builder._4
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns(BaseUrl);
 
-            return new ExternalApiClient4(restClient.Object, config.Object);
+            return new PostService4(restClient.Object, config.Object);
         }
 
-        public ExternalApiClientBuilder4 WithPost()
+        public PostServiceBuilder4 WithPost()
         {
             Posts.Add(new PostFull());
             return this;
         }
 
-        public ExternalApiClientBuilder4 WithDeletedPost()
+        public PostServiceBuilder4 WithDeletedPost()
         {
             Posts.Add(new PostFull { IsDeleted = true });
             return this;

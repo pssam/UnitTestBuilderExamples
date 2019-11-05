@@ -6,14 +6,14 @@ using Tests;
 
 namespace TestBuilder._7_add_feature_selection
 {
-    public class ExternalApiClient7
+    public class PostService7
     {
         private readonly HttpClient _client;
         private readonly IApiConfig _apiConfig;
         private readonly IMapper _mapper;
         private readonly IFeatureConfig _featureConfig;
 
-        public ExternalApiClient7(HttpClient client, IApiConfig apiConfig, IMapper mapper, IFeatureConfig featureConfig)
+        public PostService7(HttpClient client, IApiConfig apiConfig, IMapper mapper, IFeatureConfig featureConfig)
         {
             _apiConfig = apiConfig;
             _mapper = mapper;

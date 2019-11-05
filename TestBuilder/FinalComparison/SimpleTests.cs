@@ -29,10 +29,10 @@ namespace TestBuilder.FinalComparison
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("http://baseurl.com");
 
-            var apiClient = new ExternalApiClient7(httpClient, config.Object, MapperContext.Map, new Mock<IFeatureConfig>().Object);
+            var service = new PostService7(httpClient, config.Object, MapperContext.Map, new Mock<IFeatureConfig>().Object);
 
             // Act
-            var postCount = apiClient.GetPostsCount("tag");
+            var postCount = service.GetPostsCount("tag");
 
             // Assert
             Assert.AreEqual(1, postCount);
@@ -55,10 +55,10 @@ namespace TestBuilder.FinalComparison
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("http://baseurl.com");
 
-            var apiClient = new ExternalApiClient7(httpClient, config.Object, MapperContext.Map, new Mock<IFeatureConfig>().Object);
+            var service = new PostService7(httpClient, config.Object, MapperContext.Map, new Mock<IFeatureConfig>().Object);
 
             // Act
-            var postCount = apiClient.GetPostsCount("tag");
+            var postCount = service.GetPostsCount("tag");
 
             // Assert
             Assert.AreEqual(1, postCount);
@@ -81,10 +81,10 @@ namespace TestBuilder.FinalComparison
             var config = new Mock<IApiConfig>();
             config.Setup(x => x.BaseUrl).Returns("http://baseurl.com");
 
-            var apiClient = new ExternalApiClient7(httpClient, config.Object, MapperContext.Map, new Mock<IFeatureConfig>().Object);
+            var service = new PostService7(httpClient, config.Object, MapperContext.Map, new Mock<IFeatureConfig>().Object);
 
             // Act
-            var posts = apiClient.GetPosts("tag");
+            var posts = service.GetPosts("tag");
 
             // Assert
             new[] {new PostView {Name = "Title"}}.Should().BeEquivalentTo(posts);
